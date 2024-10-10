@@ -36,7 +36,7 @@ if ($stm = $connect->prepare('SELECT * FROM posts ')) {
 
         <div class="container mt-5">
             <div class="row justify-content-center">
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <h1 class="display-1">urejanje člankov</h1>
                     <table class="table table-striped table-hover">
                         <tr>

@@ -37,14 +37,14 @@ if ($stm = $connect->prepare('SELECT * FROM users ')) {
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <h1 class="display-1">Users management</h1>
+                    <h1 class="display-1">Upravljanje uporabnikov</h1>
                     <table class="table table-striped table-hover">
                         <tr>
                             <th>Id</th>
-                            <th>Username</th>
-                            <th>Email</th>
+                            <th>Uporabniško ime</th>
+                            <th>E-naslov</th>
                             <th>Status</th>
-                            <th>Edit | Delete</th>
+                            <th>Uredi | Izbriši</th>
                         </tr>
                         <tr>
                         <?php while ($record = mysqli_fetch_assoc($result)) { ?>
@@ -52,13 +52,13 @@ if ($stm = $connect->prepare('SELECT * FROM users ')) {
                             <td><?php echo $record['username']; ?></td>
                             <td><?php echo $record['email']; ?></td>
                             <td><?php echo $record['active']; ?></td>
-                            <td><a href="users_edit.php?id=<?php echo $record['id']; ?>">Edit</a> | 
-                            <a href="users.php?delete=<?php echo $record['id']; ?>">Delete</a></td>
+                            <td><a href="users_edit.php?id=<?php echo $record['id']; ?>">Uredi</a> | 
+                            <a href="users.php?delete=<?php echo $record['id']; ?>">Izbriši</a></td>
                         </tr>
 
                         <?php } ?>
                     </table>
-                    <a href="users_add.php">Add new user</a>
+                    <button type="button" class="btn btn-warning me-5" data-mdb-ripple-init onclick="window.location.href='users_add.php'">Dodaj novega uporabnika</button>
                 </div>
             </div>
         </div>

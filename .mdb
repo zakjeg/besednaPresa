@@ -1,0 +1,10 @@
+{
+  "projectName": "stranzupnije",
+  "meta": {
+    "type": "backend"
+  },
+  "backend": {
+    "platform": "php7.4"
+  },
+  "hash": "e134c75c"
+}

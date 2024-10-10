@@ -13,12 +13,13 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
     />
     <link rel="stylesheet" href="css/mdb.min.css" />
+    <link rel="stylesheet" href="css/customcss.css" />
     <link href="/CMSfavico.png" rel="icon" type="image/png" />
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">MDB CMS</a>
+    <a class="navbar-brand" href="#">CMS Župnija Šmarjeta</a>
     <button
       data-mdb-collapse-init
       class="navbar-toggler"
@@ -33,18 +34,21 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/cms">Home</a>
+          <a class="nav-link active" aria-current="page" href="/cms">Domov</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="dashboard.php">Dashboard</a>
+          <a class="nav-link" href="dashboard.php">Nadzorna plošča</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="logout.php">Logout</a>
+          <a class="nav-link" href="logout.php">Odjava</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="page_preview.php"><b>Predogled spletne strani</b></a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
 
-<?php get_message(); ?>
+
 
