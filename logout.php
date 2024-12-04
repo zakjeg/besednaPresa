@@ -4,5 +4,5 @@ include('includes/config.php');
 
 session_destroy();
 
-header('Location: /cms');
+header('Location: /seminarska_RSO');
 die();

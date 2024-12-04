@@ -4,14 +4,18 @@ include('includes\config.php');
 include('includes\database.php');
 include('includes\functions.php');
 secure();
+require_admin();
 include('includes\header.php');
 
 if(isset($_GET['delete'])){
+
+    
+
     if($stm = $connect-> prepare('DELETE FROM users WHERE id = ?')){
         $stm->bind_param('i', $_GET['delete']);
         $stm->execute();
 
-        set_message("Uspešno zbrisan uporabnik - " . $_GET['delete']);
+        set_message("Uspešno zbrisan uporabnik - " . $_GET['delete'], false);
         header('Location: users.php');
         $stm->close(); 
         die();
@@ -43,6 +47,7 @@ if ($stm = $connect->prepare('SELECT * FROM users ')) {
                             <th>Id</th>
                             <th>Uporabniško ime</th>
                             <th>E-naslov</th>
+                            <th>Skrbnik</th>
                             <th>Status</th>
                             <th>Uredi | Izbriši</th>
                         </tr>
@@ -51,6 +56,7 @@ if ($stm = $connect->prepare('SELECT * FROM users ')) {
                             <td><?php echo $record['id']; ?></td>
                             <td><?php echo $record['username']; ?></td>
                             <td><?php echo $record['email']; ?></td>
+                            <td><?php echo $record['admin']; ?></td>
                             <td><?php echo $record['active']; ?></td>
                             <td><a href="users_edit.php?id=<?php echo $record['id']; ?>">Uredi</a> | 
                             <a href="users.php?delete=<?php echo $record['id']; ?>">Izbriši</a></td>
@@ -59,6 +65,8 @@ if ($stm = $connect->prepare('SELECT * FROM users ')) {
                         <?php } ?>
                     </table>
                     <button type="button" class="btn btn-warning me-5" data-mdb-ripple-init onclick="window.location.href='users_add.php'">Dodaj novega uporabnika</button>
+                    <button data-mdb-ripple-init type="button" class="btn btn-danger me-5"  onclick="window.location.href='dashboard.php'">Nazaj na nadzorno ploščo</button>
+
                 </div>
             </div>
         </div>

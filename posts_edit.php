@@ -15,7 +15,7 @@ if (isset($_POST['title'])) {
         $stm->execute();
         $stm->close();
         
-        set_message("Uspešno objavljen članek - " . $_GET['id']);
+        set_message("Uspešno objavljen članek - " . $_GET['id'], false);
         header(header: 'Location: posts.php');
         die();
 
@@ -54,8 +54,14 @@ if (isset($_GET['id'])) {
 
 
                 <!-- Content input -->
-                <div data-mdb-input-init class="form-outline mb-4">
+                <div data-mdb-input-init class="form mb-4">
                     <textarea name="content" id="content"><?php echo $post['content']?></textarea>
+                </div>
+
+                <!-- add image -->
+                <div data-mdb-input-init class=" mb-4">
+                <label for="formFileMultiple" class="form-label"><b>Dodaj sliko!</b></label>
+                <input class="form-control" type="file" id="formFileMultiple" multiple />
                 </div>
 
                 <!-- Date select -->
@@ -63,6 +69,7 @@ if (isset($_GET['id'])) {
                     <input type="date" id="date" name="date" class="form-control" value = "<?php echo $post['date']?>"/>
                     <label class="form-label" for="date">Datum</label>
                 </div>
+
 
                 <!-- Submit button -->
                 <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-block">Uredi Članek </button>
@@ -93,7 +100,7 @@ if (isset($_GET['id'])) {
 
 <script src="js/tinymce/tinymce.min.js"></script>
 <script>
-    tinymce.init({
+tinymce.init({
         selector: '#content'
     });
 </script>

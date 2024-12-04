@@ -1,1 +1,2 @@
-includes/functions.php
+database.php
+includes/database.php

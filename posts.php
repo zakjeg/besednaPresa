@@ -1,17 +1,17 @@
 <?php
 
-include('includes\config.php');
-include('includes\database.php');
-include('includes\functions.php');
+include('includes/config.php');
+include('includes/database.php');
+include('includes/functions.php');
 secure();
-include('includes\header.php');
+include('includes/header.php');
 
 if(isset($_GET['delete'])){
     if($stm = $connect-> prepare('DELETE FROM posts WHERE id = ?')){
         $stm->bind_param('i', $_GET['delete']);
         $stm->execute();
 
-        set_message("Uspešno zbrisan post - " . $_GET['delete']);
+        set_message("Uspešno zbrisan post - " . $_GET['delete'], false);
         header('Location: posts.php');
         $stm->close(); 
         die();
@@ -60,7 +60,9 @@ if ($stm = $connect->prepare('SELECT * FROM posts ')) {
 
                         <?php } ?>
                     </table>
-                    <a href="posts_add.php">Dodaj nov članek</a>
+                    <!-- <a href="posts_add.php">Dodaj nov članek</a> -->
+                    <button type="button" class="btn btn-warning me-5" data-mdb-ripple-init onclick="window.location.href='posts_add.php'">Dodaj nov članek</button>
+                    <button data-mdb-ripple-init type="button" class="btn btn-danger me-5"  onclick="window.location.href='dashboard.php'">Nazaj na nadzorno ploščo</button>
                 </div>
             </div>
         </div>

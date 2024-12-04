@@ -1,4 +1,5 @@
 <?php
+//posts_add.php
 
 include('includes\config.php');
 include('includes\database.php');
@@ -11,7 +12,7 @@ if(isset($_POST['title'])){
         $stm->bind_param('sssi', $_POST['title'],$_POST['content'],$_SESSION['id'], $_POST['date']);
         $stm->execute();
 
-        set_message("Uspešno dodan nov članek - " . $_SESSION['title']);
+        set_message("Uspešno dodan nov članek - " . $_SESSION['title'], false);
         header('Location: posts.php');
         $stm->close(); 
         die();

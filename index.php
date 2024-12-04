@@ -1,8 +1,9 @@
 <?php
-
+//index.php
 include('includes\config.php');
 include('includes\database.php');
 include('includes\functions.php');
+
 if(isset($_SESSION['id'])){
     header('Location: dashboard.php');
     die();
@@ -11,67 +12,41 @@ if(isset($_SESSION['id'])){
 include('includes\header.php');
 
 
-/*
-if(isset($_POST['email'])){
-    if($stm = $connect-> prepare('SELECT * FROM users WHERE email = ? AND password = ? AND active = 1')){
-        $hashed = SHA1($_POST['password']);
-        $stm->bind_param('ss', $_POST['email'], $hashed);
-        $stm->execute();
-
-        $result = $stm->get_result();
-        $user = $result->fetch_assoc();
-
-        if($user){
-            $_SESSION['id'] = $user['id'];
-            $_SESSION['email'] = $user['email'];
-            $_SESSION['username'] = $user['username'];
-
-            set_message("Succesful loign " . $_SESSION['username']);
-            header('Location: dashboard.php');
-            die();
-        }else{
-            echo 'Could not prepare statement!';
-        }
-        $stm->close();
-    
-    }
-}
-*/
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    // Check if both email and password are provided
     if (empty($email) || empty($password)) {
-        set_message("Prosim izpolnite polja E-poštni naslov in Geslo ",);
+        set_message("Prosim izpolnite polja E-poštni naslov in Geslo", true);
     } else {
-        // Proceed with preparing and executing the SQL statement
-        if($stm = $connect->prepare('SELECT * FROM users WHERE email = ? AND password = ? AND active = 1')){
-            $hashed = SHA1($password);
-            $stm->bind_param('ss', $email, $hashed);
+        if ($stm = $connect->prepare('SELECT id, username, password, admin FROM users WHERE email = ? AND active = 1')) {
+            $stm->bind_param('s', $email);
             $stm->execute();
-
             $result = $stm->get_result();
             $user = $result->fetch_assoc();
 
-            if($user){
+            if ($user && password_verify($password, $user['password'])) {
+                session_regenerate_id(true); // Prevent session fixation attacks
                 $_SESSION['id'] = $user['id'];
-                $_SESSION['email'] = $user['email'];
+                $_SESSION['email'] = $email;
                 $_SESSION['username'] = $user['username'];
+                $_SESSION['is_admin'] = $user['admin'];
 
-                set_message("Uspešna prijava " . $_SESSION['username']);
+                set_message("Uspešna prijava " . $_SESSION['username'], false);
                 header('Location: dashboard.php');
                 die();
             } else {
-                set_message('Neveljaven E-poštni naslov ali Geslo');
+                set_message('Neveljaven E-poštni naslov ali Geslo', true);
             }
 
             $stm->close();
         } else {
-            echo 'Could not prepare statement!';
+            error_log('Could not prepare statement!');
+            set_message('Something went wrong. Please try again later.', true);
         }
     }
 }
+
 
 
 ?>
