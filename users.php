@@ -44,21 +44,27 @@ if ($stm = $connect->prepare('SELECT * FROM users ')) {
                     <h1 class="display-1">Upravljanje uporabnikov</h1>
                     <table class="table table-striped table-hover">
                         <tr>
-                            <th>Id</th>
+                            <th></th>
                             <th>Uporabniško ime</th>
                             <th>E-naslov</th>
                             <th>Skrbnik</th>
                             <th>Status</th>
-                            <th>Uredi | Izbriši</th>
+                            <th style="white-space: nowrap;">Uredi | Izbriši</th>
                         </tr>
                         <tr>
-                        <?php while ($record = mysqli_fetch_assoc($result)) { ?>
-                            <td><?php echo $record['id']; ?></td>
-                            <td><?php echo $record['username']; ?></td>
+                        <?php while ($record = mysqli_fetch_assoc($result)) { 
+
+                            $profilePicture = $record['profile_picture'] ? $record['profile_picture'] : 'default_profile_picture.png'; ?>
+                            <!--<td><?php #echo $record['id']; ?></td>-->
+                            <td>
+                                <img src="uploads\profile_pictures\<?php echo $profilePicture; ?>" alt="Profile Picture"                                      style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+
+                            </td>
+                            <td><h5><?php echo $record['username']; ?></h5></td>
                             <td><?php echo $record['email']; ?></td>
                             <td><?php echo $record['admin']; ?></td>
                             <td><?php echo $record['active']; ?></td>
-                            <td><a href="users_edit.php?id=<?php echo $record['id']; ?>">Uredi</a> | 
+                            <td style="white-space: nowrap;"><a href="users_edit.php?id=<?php echo $record['id']; ?>">Uredi</a> | 
                             <a href="users.php?delete=<?php echo $record['id']; ?>">Izbriši</a></td>
                         </tr>
 
