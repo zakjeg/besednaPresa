@@ -20,7 +20,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
   <div class="container-fluid">
   <a class="navbar-brand d-flex align-items-center" href="/seminarska_RSO">
-    <img src="besednapresa_logo3.png" alt="Logo" style="height: 1.5rem; margin-right: 0.5rem;">
+    <img src="includes\images\besednapresa_logo3.png" alt="Logo" style="height: 1.5rem; margin-right: 0.5rem;">
     BesednaPreša
   </a>
     <!-- <a class="navbar-brand" href="/seminarska_RSO">WordSqueeze</a> -->
