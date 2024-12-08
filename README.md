@@ -1,2 +1,2 @@
-# SpletnaStranZupnije
-Tu lahko spremljaš razvoj spletne strani župnije šmarjeta
+# Besedna preša
+Zelo Zelo Zeloooooo preprosta kopija Wordpressa
