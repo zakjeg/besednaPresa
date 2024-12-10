@@ -14,7 +14,7 @@
     />
     <link rel="stylesheet" href="css/mdb.min.css" />
     <link rel="stylesheet" href="css/customcss.css" />
-    <link rel="icon" type="image/png"  href="besednapresa_logo3.png" />
+    <link rel="icon" type="image/png"  href="includes\images\besednapresa_logo3.png" />
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">

@@ -24,7 +24,7 @@
 <div style=" height: 20px;"></div>
 <div style=" height: 20px; text-align: center;">
 
-    <p>© 2024 Župnija Šmarjeta. Vse pravice zadržane.</p>
+    <p>© 2024 BesednaPreša. Vse pravice zadržane.</p>
     <p>
       <a href="#about">About</a> | 
       <a href="#privacy">Privacy Policy</a> | 

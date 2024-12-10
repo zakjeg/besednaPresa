@@ -7,9 +7,14 @@ include('includes\functions.php');
 secure();
 include('includes\header.php');
 
+
+
 if(isset($_POST['title'])){
+
+
+
     if($stm = $connect-> prepare('INSERT INTO posts (title, content, author, date) VALUES (?,?,?,?)')){
-        $stm->bind_param('sssi', $_POST['title'],$_POST['content'],$_SESSION['id'], $_POST['date']);
+        $stm->bind_param('ssss', $_POST['title'],$_POST['content'],$_SESSION['id'], $_POST['date']);
         $stm->execute();
 
         set_message("Uspešno dodan nov članek - " . $_SESSION['title'], false);
@@ -23,6 +28,7 @@ if(isset($_POST['title'])){
     
 }
 
+?>
 
 ?>
 <div class="container mt-5">
@@ -45,7 +51,7 @@ if(isset($_POST['title'])){
 
                 <!-- Date select -->
                 <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="date" id="date" name="date" class="form-control"/>
+                    <input type="date" id="date" name="date" class="form-control" required/>
                     <label class="form-label" for="date">Datum</label>
                 </div>
 

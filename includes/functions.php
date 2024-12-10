@@ -12,7 +12,7 @@ if(mysqli_connect_errno()){
 function secure(){
     if(!isset($_SESSION['id'])){
         set_message("Za dostop se morate prijaviti!", true);
-        header('Location: /cms');
+        header('Location: /seminarska_RSO');
         die();
     }
 }

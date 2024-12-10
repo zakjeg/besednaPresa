@@ -58,11 +58,11 @@ if (isset($_GET['id'])) {
                     <textarea name="content" id="content"><?php echo $post['content']?></textarea>
                 </div>
 
-                <!-- add image -->
+                <!-- add image 
                 <div data-mdb-input-init class=" mb-4">
                 <label for="formFileMultiple" class="form-label"><b>Dodaj sliko!</b></label>
                 <input class="form-control" type="file" id="formFileMultiple" multiple />
-                </div>
+                </div>-->
 
                 <!-- Date select -->
                 <div data-mdb-input-init class="form-outline mb-4">

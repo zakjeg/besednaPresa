@@ -6,7 +6,7 @@ include('includes\functions.php');
 secure();
 include('includes\header.php');
 
-if (isset($_POST['username'])) { // Removed isset($_FILES['profile_picture']) to allow for optional upload
+if (isset($_POST['username'])) {
     // Check if email already exists
     if ($stm = $connect->prepare('SELECT COUNT(*) FROM users WHERE email = ?')) {
         $stm->bind_param('s', $_POST['email']);
@@ -20,56 +20,44 @@ if (isset($_POST['username'])) { // Removed isset($_FILES['profile_picture']) to
         } else {
             $profile_picture = NULL; // Default value if no file is uploaded
 
-            // Handle file upload only if a file was selected
+            // Handle file upload only if a file is selected
             if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
                 $img_name = $_FILES['profile_picture']['name'];
                 $img_size = $_FILES['profile_picture']['size'];
                 $tmp_name = $_FILES['profile_picture']['tmp_name'];
-            
-                error_log("File upload started for: $img_name"); // Debug log
-            
+
                 if ($img_size > 125000) {
                     set_message("Datoteka je prevelika.", true);
-                    error_log("File size exceeded limit."); // Debug log
                 } else {
                     $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
                     $img_ex_lc = strtolower($img_ex);
-            
                     $allowed_exs = array("jpg", "jpeg", "png");
+
                     if (in_array($img_ex_lc, $allowed_exs)) {
                         $new_img_name = uniqid("IMG-", true) . '.' . $img_ex_lc;
-                        $img_upload_path = 'uploads/profile_pictures/' . $new_img_name;
-            
+                        $img_upload_path = 'uploads\\profile_pictures\\' . $new_img_name;
+
                         // Ensure the directory exists
-                        if (!is_dir('uploads/profile_pictures')) {
-                            mkdir('uploads/profile_pictures', 0777, true);
-                            error_log("Directory created: uploads/profile_pictures"); // Debug log
+                        if (!is_dir('uploads\\profile_pictures\\')) {
+                            mkdir('uploads\\profile_pictures\\', 0777, true);
                         }
-            
+
                         // Move file and check result
                         if (move_uploaded_file($tmp_name, $img_upload_path)) {
-                            $profile_picture = $new_img_name;
-                            error_log("File successfully uploaded as: $profile_picture"); // Debug log
+                            $profile_picture = $new_img_name;  // Store the new image name
                         } else {
                             set_message("Napaka pri nalaganju datoteke.", true);
-                            error_log("Failed to move uploaded file."); // Debug log
                         }
                     } else {
                         set_message("Neveljavna vrsta datoteke.", true);
-                        error_log("Invalid file type: $img_ex_lc"); // Debug log
                     }
                 }
-            } else {
-                error_log("No file uploaded or file error: " . $_FILES['profile_picture']['error']); // Debug log
             }
-            
 
             // Insert user into database with or without profile picture
             if ($stm = $connect->prepare('INSERT INTO users (username, email, password, admin, active, profile_picture) VALUES (?, ?, ?, ?, ?, ?)')) {
                 $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            
-                error_log("Inserting user with profile_picture: " . ($profile_picture ?? 'NULL')); // Debug log
-            
+
                 $stm->bind_param(
                     'ssssss',
                     $_POST['username'],
@@ -77,22 +65,24 @@ if (isset($_POST['username'])) { // Removed isset($_FILES['profile_picture']) to
                     $hashed,
                     $_POST['admin'],
                     $_POST['active'],
-                    $profile_picture // Will be NULL if no image uploaded
+                    $profile_picture // This will be NULL if no image was uploaded
                 );
-            
-                $stm->execute();
-                set_message("Uspešno dodan nov uporabnik - " . $_POST['username'], false);
-                header('Location: users.php');
+
+                if ($stm->execute()) {
+                    set_message("Uspešno dodan nov uporabnik - " . $_POST['username'], false);
+                    header('Location: users.php');
+                    exit;
+                } else {
+                    set_message("Napaka pri shranjevanju uporabnika.", true);
+                }
                 $stm->close();
-                die();
             } else {
-                error_log("Database Error: " . $connect->error); // Debug log
-                echo 'Could not prepare statement! ERR4798';
+                error_log("SQL Prepare Error: " . $connect->error);
+                echo 'Could not prepare statement!';
             }
-            
         }
     } else {
-        echo 'Could not prepare statement! ERR7345';
+        echo 'Could not prepare statement!';
     }
 }
 
@@ -101,7 +91,7 @@ if (isset($_POST['username'])) { // Removed isset($_FILES['profile_picture']) to
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h1 class="display-1">Dodaj uporabnika</h1>
-            <form method="post" enctype="multipart/form-data"> <!-- Added enctype -->
+            <form method="post" enctype="multipart/form-data">
                 <!-- Username input -->
                 <div data-mdb-input-init class="form-outline mb-4">
                     <input type="text" id="username" name="username" class="form-control" />
@@ -137,21 +127,19 @@ if (isset($_POST['username'])) { // Removed isset($_FILES['profile_picture']) to
                 </div>
 
                 <!-- Profile Picture Upload -->
+                 
+                <!--
                 <div data-mdb-input-init class="form-outline mb-4">
                     <p>Profilna slika uporabnika</p>
                     <input type="file" name="profile_picture" id="profile_picture">
-                </div>
+                </div> -->
 
                 <!-- Submit button -->
                 <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-block">Add user</button>
             </form>
-
         </div>
     </div>
 </div>
-
-
-
 
 <?php
 include('includes\footer.php');

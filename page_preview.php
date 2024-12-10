@@ -22,12 +22,12 @@ include('includes/header.php');
   <style>
     body {
       font-family: Arial, sans-serif;
-      color: #4a4a4a; /* Soft gray for text */
-      background-color: #F8F4F9; /* Very light pastel pink */
+      color: #4a4a4a;
+      background-color: #F8F4F9; 
     }
 
     header {
-      background-color: #E8DAEF; /* Light lavender */
+      background-color: #E8DAEF; 
       text-align: center;
       padding: 2rem 0;
     }
@@ -36,7 +36,7 @@ include('includes/header.php');
       font-size: 2.8rem;
       font-family: 'Playfair Display', serif;
       font-weight: bold;
-      color: #4a4a4a; /* Gray for standout text */
+      color: #4a4a4a;
     }
 
     .section {
@@ -45,20 +45,20 @@ include('includes/header.php');
     }
 
     .section:nth-child(even) {
-      background-color: #F4F4F4; /* Light gray for alternating sections */
+      background-color: #F4F4F4; 
     }
 
     .section h2 {
       font-size: 1.5rem;
-      color: #4a4a4a; /* Keep title standout gray */
+      color: #4a4a4a;
     }
 
     .section p {
-      color: #6C757D; /* Muted gray for body text */
+      color: #6C757D; 
     }
 
     footer {
-      background-color: #AED6F1; /* Soft pastel blue */
+      background-color: #AED6F1; 
       color: white;
       text-align: center;
       padding: 1rem 0;
@@ -72,28 +72,28 @@ include('includes/header.php');
 </head>
 <body>
   <header>
-    <h1>Ne se fugirat!</h1>
+    <h1><b>Kako je nastala Besedna preša: Od ideje do resničnosti</b></h1>
   </header>
 
   <main class="container-fluid p-0">
     <?php
-    // Prepare the SQL statement to retrieve all posts
+
     //if ($stm = $connect->prepare('SELECT * FROM posts ORDER BY date DESC')) {
       if ($stm = $connect->prepare('
       SELECT posts.*, users.username 
       FROM posts 
       LEFT JOIN users ON posts.author = users.id 
-      ORDER BY posts.date DESC
+      ORDER BY posts.date ASC
       ')) {   
         $stm->execute();
         $result = $stm->get_result();
 
-        // Check if there are any posts
+
         if ($result->num_rows > 0) {
             while ($record = $result->fetch_assoc()) { ?>
                 <div class="section">
-                  <h2><?php echo htmlspecialchars($record['title']); ?></h2>
-                  <p><?php echo $record['content']; ?></p> <!-- Display HTML content directly -->
+                  <!--<h2><?php echo htmlspecialchars($record['title']); ?></h2>-->
+                  <p><?php echo $record['content']; ?></p>
                   <p><small>Published on: <?php echo htmlspecialchars($record['date']); ?>, by <?php echo htmlspecialchars($record['username']); ?></small></p>
                 </div>
             <?php }
@@ -107,7 +107,7 @@ include('includes/header.php');
     ?>
   </main>
 
-  <!-- MDBootstrap JS -->
+
   <script 
     src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js">
   </script>

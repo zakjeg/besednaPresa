@@ -20,24 +20,16 @@ if(isset($_GET['delete'])){
         } 
 }
 
-
-if ($stm = $connect->prepare('SELECT * FROM posts ')) {
+if ($stm = $connect->prepare('SELECT * FROM posts')) {
     $stm->execute();
-
     $result = $stm->get_result();
 
-    //var_dump($result->num_rows);
-
-    //die();
-    if ($result->num_rows > 0) {
-
-        ?>
-
-
-        <div class="container mt-5">
-            <div class="row justify-content-center">
-                <div class="col-md-9">
-                    <h1 class="display-1">urejanje člankov</h1>
+    ?>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <h1 class="display-1">Urejanje člankov</h1>
+                <?php if ($result->num_rows > 0) { ?>
                     <table class="table table-striped table-hover">
                         <tr>
                             <th>Id</th>
@@ -54,30 +46,25 @@ if ($stm = $connect->prepare('SELECT * FROM posts ')) {
                             <td><?php echo $record['author']; ?></td>
                             <td><?php echo $record['content']; ?></td>
                             <td><?php echo $record['date']; ?></td>
-                            <td><a href="posts_edit.php?id=<?php echo $record['id']; ?>">Uredi</a> | 
-                            <a href="posts.php?delete=<?php echo $record['id']; ?>">Izbriši</a></td>
+                            <td>
+                                <a href="posts_edit.php?id=<?php echo $record['id']; ?>">Uredi</a> | 
+                                <a href="posts.php?delete=<?php echo $record['id']; ?>">Izbriši</a>
+                            </td>
                         </tr>
-
                         <?php } ?>
                     </table>
-                    <!-- <a href="posts_add.php">Dodaj nov članek</a> -->
-                    <button type="button" class="btn btn-warning me-5" data-mdb-ripple-init onclick="window.location.href='posts_add.php'">Dodaj nov članek</button>
-                    <button data-mdb-ripple-init type="button" class="btn btn-danger me-5"  onclick="window.location.href='dashboard.php'">Nazaj na nadzorno ploščo</button>
-                </div>
+                <?php } else { ?>
+                    <p class="text-center mt-3">No posts found</p>
+                <?php } ?>
+                <!-- Always display the buttons -->
+                <button type="button" class="btn btn-warning me-5" data-mdb-ripple-init onclick="window.location.href='posts_add.php'">Dodaj nov članek</button>
+                <button data-mdb-ripple-init type="button" class="btn btn-danger me-5" onclick="window.location.href='dashboard.php'">Nazaj na nadzorno ploščo</button>
             </div>
         </div>
-
-
-
-
-        <?php
-    } else {
-        echo 'No posts found';
-    }
-
+    </div>
+    <?php
     $stm->close();
 } else {
     echo 'Could not prepare statement!';
 }
-include('includes\footer.php');
-?>
+include('includes/footer.php');
