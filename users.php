@@ -54,7 +54,7 @@ if ($stm = $connect->prepare('SELECT * FROM users ')) {
                         <tr>
                         <?php while ($record = mysqli_fetch_assoc($result)) { 
 
-                            $profilePicture = $record['profile_picture'] ? $record['profile_picture'] : 'default_profile_picture.png'; ?>
+                            $profilePicture = $record['profile_picture'] ? $record['profile_picture'] : 'default-profile-picture.png'; ?>
                             <!--<td><?php #echo $record['id']; ?></td>-->
                             <td>
                                 <img src="uploads\profile_pictures\<?php echo $profilePicture; ?>" alt="Profile Picture"                                      style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
